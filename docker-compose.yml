@@ -1,0 +1,29 @@
+version: '3'
+services:
+  fooddb:
+    image: mysql:5.7
+    container_name: Appmysql
+ #   restart: always
+    ports:
+     - "3313:3306"
+    volumes:
+     - ./mysql:/var/lib/mysql
+    env_file: .env     
+  claseadm:
+    image: phpmyadmin:latest
+    container_name: Appadm
+  #  restart: always
+    ports:
+     - "8025:80"
+    env_file: .env
+    links:
+     - fooddb:mysqldb
+  clasehtml:
+    build: ./
+    container_name: html
+   # restart: always
+    ports:
+     - "8080:80"
+    env_file: .env
+    volumes:
+     - ./html:/var/www/html
